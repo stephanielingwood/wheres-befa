@@ -1,0 +1,28 @@
+{
+  "name": "wheres-befa",
+  "version": "1.0.0",
+  "description": "Returns location data for BEFA aircraft",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stephanielingwood/wheres-befa.git"
+  },
+  "author": "Stephanie Lingwood",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/stephanielingwood/wheres-befa/issues"
+  },
+  "homepage": "https://github.com/stephanielingwood/wheres-befa#readme",
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^4.0.1",
+    "serverless-dynamodb-local": "^0.2.25",
+    "serverless-offline": "^3.16.0"
+  },
+  "dependencies": {
+    "serverless-dynamodb-client": "0.0.2"
+  }
+}
