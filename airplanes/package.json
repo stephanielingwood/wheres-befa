@@ -1,0 +1,33 @@
+{
+  "name": "wheres-befa",
+  "version": "1.0.0",
+  "description": "Returns location data for BEFA aircraft",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "install": "docker pull lambci/lambda",
+    "config": "./node_modules/.bin/sls config credentials --provider aws --key $SLS_AWS_KEY --secret $SLS_AWS_SECRET",
+    "start": "./node_modules/.bin/sls offline start -r us-east-1 --noTimeout",
+    "installDynamoDB": "./node_modules/.bin/sls dynamodb install",
+    "startDynamoDB": "./node_modules/.bin/sls dynamodb start -p 8000"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/stephanielingwood/wheres-befa.git"
+  },
+  "author": "Stephanie Lingwood",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/stephanielingwood/wheres-befa/issues"
+  },
+  "homepage": "https://github.com/stephanielingwood/wheres-befa#readme",
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^4.0.1",
+    "serverless-dynamodb-local": "^0.2.25",
+    "serverless-offline": "^3.16.0"
+  },
+  "dependencies": {
+    "serverless-dynamodb-client": "0.0.2"
+  }
+}
