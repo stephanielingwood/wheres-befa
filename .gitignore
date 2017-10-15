@@ -1,2 +1,6 @@
 airplane-adsb-list.txt
 node_modules/
+npm-debug.log
+
+.serverless
+env.yml
