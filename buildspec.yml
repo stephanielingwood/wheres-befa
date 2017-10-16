@@ -18,6 +18,6 @@ phases:
       - npm run lint
       - npm test
 
-  post-build:
+  post_build:
     commands:
       - echo "yahoo!"
