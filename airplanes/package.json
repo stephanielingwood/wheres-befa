@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "lint": "jshint */*.js",
-    "test": "sls invoke test",
+    "test": "sls invoke test -s dev",
     "install": "docker pull lambci/lambda",
     "config": "./node_modules/.bin/sls config credentials --provider aws --key $SLS_AWS_KEY --secret $SLS_AWS_SECRET",
     "start": "./node_modules/.bin/sls offline start -r us-east-1 --noTimeout",

@@ -8,6 +8,8 @@ provider:
   versionFunctions: false
 #  stage: dev
   region: us-east-1
+  environment:
+    STAGE: ${opt:stage}
 
   iamRoleStatements:
     - Effect: "Allow"
@@ -44,7 +46,7 @@ resources:
       Type: 'AWS::DynamoDB::Table'
       DeletionPolicy: Retain
       Properties:
-        TableName: 'WheresBEFAAirplanesTable'
+        TableName: 'WheresBEFAAirplanesTable-${opt:stage}'
         AttributeDefinitions:
           -
             AttributeName: 'tailNumber'
@@ -69,7 +71,7 @@ custom:
     seed:
       domain:
         sources:
-          - table: 'WheresBEFAAirplanesTable'
+          - table: 'WheresBEFAAirplanesTable-${opt:stage}'
             sources: [./airplaneSeedData.json]
 
 plugins:
