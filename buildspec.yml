@@ -1,0 +1,23 @@
+version: 0.2
+
+env:
+  variables:
+    AWS_REGION: 'us-east-1'
+
+phases:
+  install:
+    commands:
+      - apt-get update
+      - npm install -g serverless
+      - npm install -g mocha
+      - cd airplanes
+      - npm install
+
+  build:
+    commands:
+      - npm run lint
+      - npm test
+
+  post-build:
+    commands:
+      - echo "yahoo!"

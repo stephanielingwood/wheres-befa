@@ -9,8 +9,6 @@ const _ = require('underscore');
 let wrappedGetAll = mochaPlugin.getWrapper('getAll', '/handler.js', 'getAllAirplanes');
 let wrappedPost = mochaPlugin.getWrapper('getAll', '/handler.js', 'postAirplane');
 
-
-
 describe('getAll', () => {
   before(() => {
     const body = JSON.stringify({
