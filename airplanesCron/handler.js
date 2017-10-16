@@ -5,17 +5,13 @@ const async = require('async');
 const _ = require('underscore');
 
 module.exports.cron = (event, context, callback) => {
-  const apiUrl = process.env.API_URL;
-  const openSkyUsername = process.env.OPEN_SKY_USERNAME;
-  const openSkyPassword = process.env.OPEN_SKY_PASSWORD;
-  const query = process.env.ADSB_QUERY;
-  const openSkyURL = `http://${openSkyUsername}:${openSkyPassword}@opensky-network.org/api/states/all?${query}`;
-
-  let data = {};
+  let data = {
+    apiUrl: process.env.API_URL
+  };
 
   async.series([
-      callOpenSky.bind(null, data),
       getAirplanes.bind(null, data),
+      callOpenSky.bind(null, data),
       updateAirplanes.bind(null, data)
     ], err => {
       if (err)
@@ -24,15 +20,49 @@ module.exports.cron = (event, context, callback) => {
     }
   );
 
+  function getAirplanes(data, callback) {
+    console.log('Getting airplanes');
+
+    request(data.apiUrl,
+      (err, response, airplanes) => {
+        if (err)
+          return callback(err);
+
+        var parsedAirplanes = JSON.parse(airplanes);
+
+        if (!parsedAirplanes || !parsedAirplanes.length)
+          return callback();
+
+        data.airplanes = {};
+
+        _.each(parsedAirplanes, airplane => {
+          data.airplanes[airplane.ADSB] = airplane.tailNumber;
+        });
+
+        return callback();
+      }
+    );
+  }
+
   function callOpenSky(data, callback) {
+    if (!data.airplanes) return callback();
     console.log('Calling OpenSky');
+
+    const openSkyUsername = process.env.OPEN_SKY_USERNAME;
+    const openSkyPassword = process.env.OPEN_SKY_PASSWORD;
+
+    const openSkyQuery = _.reduce(data.airplanes, (query, value, key) => {
+      return query + `icao24=${key}&`
+    }, '');
+
+    const openSkyURL = `http://${openSkyUsername}:${openSkyPassword}@opensky-network.org/api/states/all?${openSkyQuery}`;
 
     request(openSkyURL,
       (err, response, body) => {
         if (err)
           return callback(err);
 
-        console.log('Open sky returned: ', body)
+        console.log('Open sky returned: ', body);
 
         if (body.states)
           data.states = JSON.parse(body.states);
@@ -42,44 +72,9 @@ module.exports.cron = (event, context, callback) => {
     );
   }
 
-  function getAirplanes(data, callback) {
-    if (!data.states) return callback();
-    console.log('Getting airplanes');
-
-    request(apiUrl,
-      (err, response, airplanes) => {
-        if (err)
-          return callback(err);
-
-        var parsedAirplanes = JSON.parse(airplanes);
-
-        data.airplanes = {};
-
-        _.each(parsedAirplanes, airplane => {
-          console.log(airplane.ADSB)
-          data.airplanes[airplane.ADSB] = airplane.tailNumber;
-        });
-        console.log(data.airplanes)
-        return callback();
-      }
-    );
-  }
-
   function updateAirplanes(data, callback) {
     if (!data.states) return callback();
     console.log('Updating airplanes');
-
-    // data.states = [
-    //   [
-    //     "aa38f3",
-    //     null,
-    //     null,
-    //     null,
-    //     null,
-    //     100,
-    //     45
-    //   ]
-    // ]
 
     async.each(data.states,
       (state, done) => {
@@ -92,14 +87,14 @@ module.exports.cron = (event, context, callback) => {
 
         request.post({
             headers: {'content-type': 'application/json'},
-            url: apiUrl,
+            url: data.apiUrl,
             body: JSON.stringify(update)
           },
           (err, response, airplanes) => {
             if (err)
               return callback(err);
 
-            console.log("Successfully updated " + data.airplanes[state[0]])
+            console.log(`Updated ${data.airplanes[state[0]]} with latitude ${state[6]} and longitude ${state[5]}`);
           }
         )
       },
