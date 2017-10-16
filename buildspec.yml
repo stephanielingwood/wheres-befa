@@ -21,4 +21,4 @@ phases:
 
   post_build:
     commands:
-      - echo "yahoooo!"
+      - echo "yahoo!"
