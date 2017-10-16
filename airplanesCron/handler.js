@@ -52,7 +52,7 @@ module.exports.cron = (event, context, callback) => {
     const openSkyPassword = process.env.OPEN_SKY_PASSWORD;
 
     const openSkyQuery = _.reduce(data.airplanes, (query, value, key) => {
-      return query + `icao24=${key}&`
+      return query + `icao24=${key}&`;
     }, '');
 
     const openSkyURL = `http://${openSkyUsername}:${openSkyPassword}@opensky-network.org/api/states/all?${openSkyQuery}`;
@@ -96,7 +96,7 @@ module.exports.cron = (event, context, callback) => {
 
             console.log(`Updated ${data.airplanes[state[0]]} with latitude ${state[6]} and longitude ${state[5]}`);
           }
-        )
+        );
       },
       err => {
         if (err) {
