@@ -15,7 +15,7 @@ phases:
 
   build:
     commands:
-      - serverless deploy -s cicd
+      - serverless deploy -s cicd -v
       - npm run lint
       - serverless invoke test -s cicd
 
