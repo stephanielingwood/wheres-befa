@@ -22,3 +22,11 @@ phases:
   post_build:
     commands:
       - echo "yahoo!"
+
+artifacts:
+  files:
+    - serverless.yml
+    - publish.zip
+    - promotion.sh
+  discard-paths: yes
+

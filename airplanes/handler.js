@@ -6,8 +6,6 @@ const Airplanes = require('./airplanes.js');
 let airplanes = new Airplanes(dynamoDb, `WheresBEFAAirplanesTable-${process.env.STAGE}`);
 
 module.exports.getAllAirplanes = (event, context, callback) => {
-  console.log('STAGE')
-console.log(process.env.STAGE)
   airplanes.getAll(callback);
 }
 ;
