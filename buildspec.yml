@@ -27,6 +27,7 @@ artifacts:
   files:
     - serverless.yml
     - publish.zip
+    - package.json
     - promotion.sh
   discard-paths: yes
 
