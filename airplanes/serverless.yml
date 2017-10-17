@@ -63,10 +63,10 @@ custom:
   dynamodb:
     start:
       port: 8000
-      migrate: true
+      # migrate: true
       seed: true
       # uncomment for already-running local dynamodb
-      # noStart: true
+      noStart: true
     # seed table with default airplane data
     seed:
       domain:
