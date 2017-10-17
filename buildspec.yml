@@ -16,14 +16,9 @@ phases:
 
   build:
     commands:
-      - cd ../airplanes
       - serverless deploy -s cicd -v
       - npm run lint
       - serverless invoke test -s cicd
-
-  post_build:
-    commands:
-      - echo "yahoo!"
 
 artifacts:
   files:
