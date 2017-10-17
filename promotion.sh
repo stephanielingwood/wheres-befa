@@ -1,6 +1,7 @@
 apt-get install jq
 npm install -g serverless
 
+export OPEN_SKY_USERNAME=$(aws ssm get-parameters --names OPEN_SKY_USERNAME --with-decryption | jq '.Parameters | .[0] | .Value')
 export OPEN_SKY_PASSWORD=$(aws ssm get-parameters --names OPEN_SKY_PASSWORD --with-decryption | jq '.Parameters | .[0] | .Value')
 
 cd airplanes
