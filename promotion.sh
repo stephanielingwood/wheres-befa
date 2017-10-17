@@ -1,3 +1,4 @@
+apt-get update
 apt-get install jq
 npm install -g serverless
 
@@ -8,11 +9,11 @@ echo $OPEN_SKY_USERNAME
 echo $API_URL
 
 cd airplanes
-npm install
+npm install -s
 serverless deploy -f getAll -s prod -r us-east-1 -v
 serverless deploy -f post -s prod -r us-east-1 -v
 
 cd ../airplanesCron
-npm install
+npm install -s
 serverless deploy -f cron -s prod -r us-east-1 -v
 
