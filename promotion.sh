@@ -1,4 +1,5 @@
 npm install -g serverless
+npm install
 
 cd airplanes
 serverless deploy -f getAll -s prod -r us-east-1 -v
