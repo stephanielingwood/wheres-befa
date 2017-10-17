@@ -9,9 +9,12 @@ provider:
 #  stage: dev
   region: us-east-1
   environment:
+    # OPEN_SKY_USERNAME: "${self:custom.env.OPEN_SKY_USERNAME}"
+    # OPEN_SKY_PASSWORD: ${file(./env.yml):${opt:stage}.OPEN_SKY_PASSWORD}
+    # API_URL: ${file(./env.yml):${opt:stage}.API_URL}
     OPEN_SKY_USERNAME: "${self:custom.env.OPEN_SKY_USERNAME}"
-    OPEN_SKY_PASSWORD: ${file(./env.yml):${opt:stage}.OPEN_SKY_PASSWORD}
-    API_URL: ${file(./env.yml):${opt:stage}.API_URL}
+    OPEN_SKY_PASSWORD: "${self:custom.env.OPEN_SKY_PASSWORD}"
+    API_URL: "${self:custom.env.API_URL}"
 
 package:
  exclude:

@@ -54,7 +54,6 @@ module.exports.cron = (event, context, callback) => {
     const openSkyQuery = _.reduce(data.airplanes, (query, value, key) => {
       return query + `icao24=${key}&`;
     }, '');
-
     const openSkyURL = `http://${openSkyUsername}:${openSkyPassword}@opensky-network.org/api/states/all?${openSkyQuery}`;
 
     request(openSkyURL,
